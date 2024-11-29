@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login and Signup</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #6A82FB, #FC5C7D); /* Gradient background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            transition: all 0.3s ease;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 15px;
+            margin: 12px 0;
+            border-radius: 10px;
+            border: 2px solid #ddd;
+            font-size: 16px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            transition: border 0.3s ease;
+        }
+
+        .input-field:focus {
+            border-color: #6A82FB;
+            outline: none;
+        }
+
+        .input-field::placeholder {
+            color: #aaa;
+        }
+
+        .input-field i {
+            margin-right: 10px;
+            color: #6A82FB;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background-color: #6A82FB;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            background-color: #FC5C7D;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+        }
+
+        .link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .link a {
+            text-decoration: none;
+            color: #6A82FB;
+            font-weight: 600;
+        }
+
+        .link a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message, .welcome-message {
+            display: none;
+            text-align: center;
+            font-size: 16px;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .welcome-message {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .image-container img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 4px solid #6A82FB;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Smooth scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #6A82FB;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background-color: #f1f1f1;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .container {
+                padding: 25px;
+                width: 90%;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Login Form -->
+    <div class="container" id="login-form">
+        <div class="image-container">
+            <img src="https://th.bing.com/th/id/OIP.UvnCE3rFETTrHEF70xkUQQHaFE?rs=1&pid=ImgDetMain" alt="Profile Picture"> <!-- Replace with your image URL -->
+        </div>
+        <h2>Login</h2>
+        <div class="input-field">
+            <i class="fas fa-envelope"></i>
+            <input type="email" id="login-email" placeholder="Email" required>
+        </div>
+        <div class="input-field">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="login-password" placeholder="Password" required>
+        </div>
+        <button class="btn" onclick="login()">Login</button>
+        <div class="link">
+            <p>Don't have an account? <a href="#" onclick="toggleForm('signup')">Sign up</a></p>
+        </div>
+        <!-- Error message for invalid login -->
+        <div class="error-message" id="error-message">
+            <p>Invalid email or password. Please try again.</p>
+        </div>
+    </div>
+
+    <!-- Signup Form -->
+    <div class="container" id="signup-form" style="display: none;">
+        <h2>Signup</h2>
+        <div class="input-field">
+            <i class="fas fa-user"></i>
+            <input type="text" id="signup-name" placeholder="Full Name" required>
+        </div>
+        <div class="input-field">
+            <i class="fas fa-envelope"></i>
+            <input type="email" id="signup-email" placeholder="Email" required>
+        </div>
+        <div class="input-field">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="signup-password" placeholder="Password" required>
+        </div>
+        <button class="btn" onclick="signup()">Signup</button>
+        <div class="link">
+            <p>Already have an account? <a href="#" onclick="toggleForm('login')">Login</a></p>
+        </div>
+    </div>
+
+    <!-- Welcome Message -->
+    <div class="welcome-message" id="welcome-message">
+        <p>Hi Cookies! Keep doing what you love and never let anyone hold you back! TANGINAMO! HAHHAHAHHA  wag kana babalik don tanginamo baka ikay makutusan kona</p>
+    </div>
+
+    <script>
+        // Function to toggle between login and signup forms
+        function toggleForm(formType) {
+            if (formType === 'signup') {
+                document.getElementById('login-form').style.display = 'none';
+                document.getElementById('signup-form').style.display = 'block';
+            } else {
+                document.getElementById('login-form').style.display = 'block';
+                document.getElementById('signup-form').style.display = 'none';
+            }
+        }
+
+        // Function to handle login
+        function login() {
+            var email = document.getElementById('login-email').value;
+            var password = document.getElementById('login-password').value;
+
+            // Check if the entered email and password match the predefined values
+            if (email === 'danica@gmail.com' && password === 'walangpasswordto') {
+                // Hide login form and show the welcome message
+                document.getElementById('login-form').style.display = 'none';
+                document.getElementById('welcome-message').style.display = 'block';
+                document.getElementById('error-message').style.display = 'none';
+                
+                // Sweet popup message
+                alert("Welcome sa gawa ko cookies and cream, Danica! You're doing amazing!");
+            } else {
+                // Show error message for invalid login
+                document.getElementById('error-message').style.display = 'block';
+            }
+        }
+
+        // Placeholder function for signup (just a message)
+        function signup() {
+            var name = document.getElementById('signup-name').value;
+            var email = document.getElementById('signup-email').value;
+            var password = document.getElementById('signup-password').value;
+
+            // Simple validation check (signing up with any data)
+            if (name && email && password) {
+                alert("Signup successful! Now you can log in.");
+            } else {
+                alert("Please fill in all fields.");
+            }
+        }
+    </script>
+
+</body>
+</html>
